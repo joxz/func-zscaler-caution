@@ -80,9 +80,7 @@ ${JSON.stringify(params, null, 2)}
       <script>
           function continueToWebsite() {
               // Redirect to the requested website
-              window.location.href = "${
-                params.url
-              }"; // Replace [WEBSITE_URL] with the actual URL
+              window.location.href = "${`https://gateway.zscaler.net:443/_sm_ctn?_sm_url=${params.url}&_sm_rid=${params.zsq}&_sm_cat=${params.cat}`}"; // Replace [WEBSITE_URL] with the actual URL
           }
 
           function toggleDebugInfo() {

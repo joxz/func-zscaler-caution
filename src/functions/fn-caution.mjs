@@ -1,29 +1,33 @@
 import { app } from "@azure/functions";
-import { sendSuccess, sendHtml } from "../lib/response.mjs";
+import { sendHtml, sendErr } from "../lib/response.mjs";
 import useragent from "useragent";
 import { formatCaution } from "../lib/format.mjs";
 
 async function caution(req, context) {
-  let params = {
-    action: req.query.get("action"),
-    cat: req.query.get("cat"),
-    kind: req.query.get("kind"),
-    reason: req.query.get("reason").replace(/\+/g, " "),
-    reasoncode: req.query.get("reasoncode"),
-    referer: req.query.get("referer"),
-    rule: req.query.get("rule"),
-    timebound: req.query.get("timebound"),
-    url: req.query.get("url"),
-    user: req.query.get("user"),
-    locid: req.query.get("locid"),
-    lang: req.query.get("lang"),
-    zsq: req.query.get("zsq").split("zsq")[0],
-    useragent: useragent.parse(req.headers.get("user-agent")),
-  };
+  try {
+    let params = {
+      action: req.query.get("action"),
+      cat: req.query.get("cat"),
+      kind: req.query.get("kind"),
+      reason: req.query.get("reason").replace(/\+/g, " "),
+      reasoncode: req.query.get("reasoncode"),
+      referer: req.query.get("referer"),
+      rule: req.query.get("rule"),
+      timebound: req.query.get("timebound"),
+      url: req.query.get("url"),
+      user: req.query.get("user"),
+      locid: req.query.get("locid"),
+      lang: req.query.get("lang"),
+      zsq: req.query.get("zsq").split("zsq")[0],
+      useragent: useragent.parse(req.headers.get("user-agent")),
+    };
 
-  let content = await formatCaution(params);
+    let content = await formatCaution(params);
 
-  return sendHtml(content);
+    return sendHtml(content);
+  } catch (err) {
+    sendErr(err);
+  }
 }
 
 app.http("fn-caution", {

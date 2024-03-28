@@ -17,3 +17,13 @@ export const sendHtml = (content) => {
     },
   };
 };
+
+export const sendErr = (content) => {
+  return {
+    status: 400,
+    body: content,
+    headers: {
+      "Content-Type": "text/plain",
+    },
+  };
+};
