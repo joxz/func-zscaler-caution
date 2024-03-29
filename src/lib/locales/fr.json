@@ -1,0 +1,9 @@
+{
+  "title": "Prudence!",
+  "greeting": "Bonjour",
+  "msg": "Vous êtes sur le point d'accéder à un site Web classé %s, qui est bloqué pour la raison suivante: %s",
+  "blocking": "Bonjour, le site est bloqué à cause de {reason} et {action}",
+  "website": "Le site Web que vous avez essayé de visiter est:",
+  "proceed": "Procédez à vos propres risques",
+  "continue": "Continuer"
+}

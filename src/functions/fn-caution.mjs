@@ -17,7 +17,7 @@ async function caution(req, context) {
       url: req.query.get("url"),
       user: req.query.get("user"),
       locid: req.query.get("locid"),
-      lang: req.query.get("lang"),
+      lang: req.query.get("lang").split("_")[0].toLowerCase(),
       zsq: req.query.get("zsq").split("zsq")[0],
       useragent: useragent.parse(req.headers.get("user-agent")),
     };

@@ -1,0 +1,9 @@
+{
+  "title": "Caution!",
+  "greeting": "Hello",
+  "msg": "You are about to access a website categorized as %s, which is blocked for the following reason: %s",
+  "blocking": "Hello, site is blocked because of {reason} and {action}",
+  "website": "The website you tried to visit is:",
+  "proceed": "Proceed at your own risk",
+  "continue": "Continue"
+}
