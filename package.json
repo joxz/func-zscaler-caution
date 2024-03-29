@@ -9,9 +9,11 @@
   },
   "dependencies": {
     "@azure/functions": "^4.0.0",
+    "i18n": "^0.15.1",
     "useragent": "^2.3.0"
   },
   "devDependencies": {
+    "@types/i18n": "^0.13.10",
     "@types/useragent": "^2.3.4",
     "azure-functions-core-tools": "^4.x"
   }

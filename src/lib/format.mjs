@@ -1,3 +1,16 @@
+import i18n from "i18n";
+import path from "path";
+
+const __dirname = path.dirname(new URL(import.meta.url).pathname);
+
+i18n.configure({
+  locales: ["en", "fr", "de"], // Supported languages
+  directory: path.join(__dirname, "locales"), // Path to translation files
+  defaultLocale: "en", // Default language
+  autoReload: true, // watch for changes in JSON files to reload locale on updates - defaults to false
+  objectNotation: true, // Allows for nested translations
+});
+
 export const formatCaution = async (params) => {
   return `
   <!DOCTYPE html>
@@ -34,9 +47,15 @@ export const formatCaution = async (params) => {
               color: #ff0000;
           }
           .debug-info {
-              display: none;
               text-align: left;
               margin-top: 20px;
+              background-color: #efefef;
+              border-radius: 8px;
+              padding: 10px;
+          }
+          pre {
+            white-space: pre-wrap;
+            text-align: left;
           }
           button {
               background-color: #4CAF50;
@@ -55,41 +74,47 @@ export const formatCaution = async (params) => {
   </head>
   <body>
       <div class="container">
-          <h1>Caution!</h1>
-          <p>Hello, <span class="emphasis">${params.user}</span>.</p>
-          <p>You are about to access a website categorized as <span class="emphasis">${
-            params.cat
-          }</span>, which is blocked for the following reason: <span class="emphasis">${
-    params.reason
-  }</span>.</p>
-          <p>The website you tried to visit is: <span class="emphasis">${
-            params.url
-          }</span>.</p>
-          <p>Proceed at your own risk.</p>
-          <button onclick="continueToWebsite()">Continue</button>
-          <br><br>
+          <h1>${i18n.__({ phrase: "title", locale: `${params.lang}` })}</h1>
+          <p>${i18n.__({
+            phrase: "greeting",
+            locale: `${params.lang}`,
+          })}, <span class="emphasis">${params.user}</span></p>
+          <p>${i18n
+            .__({ phrase: "msg", locale: params.lang })
+            .replace("%s", `<span class="emphasis">${params.cat}</span>`)
+            .replace(
+              "%s",
+              `<span class="emphasis">${params.reason}</span>`
+            )}.</p>
+          <p>${i18n.__({
+            phrase: "website",
+            locale: `${params.lang}`,
+          })} <span class="emphasis">${params.url}</span></p>
+          <p>${i18n.__({ phrase: "proceed", locale: `${params.lang}` })}</p>
+          <button onclick="continueToWebsite()">${i18n.__({
+            phrase: "continue",
+            locale: `${params.lang}`,
+          })}</button>
+          <br><br><br>
           <div class="debug-info" id="debugInfo">
               <h2>Debug Information</h2>
               <pre>
-${JSON.stringify(params, null, 2)}
+${JSON.stringify(
+  {
+    ...params,
+    forward_url: `https://gateway.zscaler.net:443/_sm_ctn?_sm_url=${params.url}&_sm_rid=${params.zsq}&_sm_cat=${params.cat}`,
+  },
+  null,
+  4
+)}
               </pre>
           </div>
-          <button onclick="toggleDebugInfo()">Debug Info</button>
       </div>
 
       <script>
           function continueToWebsite() {
               // Redirect to the requested website
-              window.location.href = "${`https://gateway.zscaler.net:443/_sm_ctn?_sm_url=${params.url}&_sm_rid=${params.zsq}&_sm_cat=${params.cat}`}"; // Replace [WEBSITE_URL] with the actual URL
-          }
-
-          function toggleDebugInfo() {
-              var debugInfo = document.getElementById("debugInfo");
-              if (debugInfo.style.display === "none") {
-                  debugInfo.style.display = "block";
-              } else {
-                  debugInfo.style.display = "none";
-              }
+              window.location.href = "${`https://gateway.zscaler.net:443/_sm_ctn?_sm_url=${params.url}&_sm_rid=${params.zsq}&_sm_cat=${params.cat}`}";
           }
       </script>
   </body>
