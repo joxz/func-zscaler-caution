@@ -60,6 +60,9 @@ export const formatCaution = async (params) => {
       padding: 4px 8px;
       font-size: 14px;
     }
+    .copy-button:hover {
+      background-color: #8400ff;
+    }
     pre {
       white-space: pre-wrap;
       text-align: left;

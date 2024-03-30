@@ -5,6 +5,12 @@ import { formatCaution } from "../lib/format.mjs";
 
 async function caution(req, context) {
   try {
+    let headers = {};
+    let query = {};
+
+    req.headers.forEach((v, k) => (headers[k] = v));
+    req.query.forEach((v, k) => (query[k] = v));
+
     let params = {
       action: req.query.get("action"),
       cat: req.query.get("cat"),
@@ -20,6 +26,8 @@ async function caution(req, context) {
       lang: req.query.get("lang").split("_")[0].toLowerCase(),
       zsq: req.query.get("zsq").split("zsq")[0],
       useragent: useragent.parse(req.headers.get("user-agent")),
+      headers: headers,
+      query: query,
     };
 
     let content = await formatCaution(params);
@@ -35,5 +43,3 @@ app.http("fn-caution", {
   route: "caution",
   handler: caution,
 });
-
-// http://localhost:7071/caution?url=https://www.gambling.com/&referer=&reason=Not+allowed+to+browse+Gambling+category&reasoncode=CATEGORY_DENIED&timebound=1&action=deny&kind=category&rule=322760&cat=Gambling&user=user@domain.tld&locid=00000000&lang=fr_FR&zsq=JDspV0Ft81ZLq0j55Z0FsFsL6n0VSDV0F86pDD6zsq
