@@ -1,7 +1,7 @@
-export const sendSuccess = (content) => {
+export const sendJson = (content) => {
   return {
     status: 200,
-    body: JSON.stringify(content),
+    body: JSON.stringify(content, null, 2),
     headers: {
       "Content-Type": "application/json",
     },
@@ -25,5 +25,11 @@ export const sendErr = (content) => {
     headers: {
       "Content-Type": "text/plain",
     },
+  };
+};
+
+export const sendNoContent = () => {
+  return {
+    status: 204,
   };
 };

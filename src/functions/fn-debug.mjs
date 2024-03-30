@@ -1,4 +1,5 @@
 import { app } from "@azure/functions";
+import { sendErr, sendJson } from "../lib/response.mjs";
 
 async function debug(req, context) {
   try {
@@ -19,19 +20,13 @@ async function debug(req, context) {
       context: context,
     };
 
-    return {
-      status: 200,
-      body: JSON.stringify(content, null, 2),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
+    return sendJson(content);
   } catch (err) {
-    return "problem";
+    return sendErr(err);
   }
 }
 
-app.http("ebug", {
+app.http("fn-debug", {
   methods: ["GET"],
   route: "debug",
   handler: debug,
