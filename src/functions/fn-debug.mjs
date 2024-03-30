@@ -1,6 +1,6 @@
 import { app } from "@azure/functions";
 
-async function echo(req, context) {
+async function debug(req, context) {
   try {
     let headers = {};
     let query = {};
@@ -31,8 +31,8 @@ async function echo(req, context) {
   }
 }
 
-app.http("echo", {
+app.http("ebug", {
   methods: ["GET"],
-  route: "echo",
-  handler: echo,
+  route: "debug",
+  handler: debug,
 });
