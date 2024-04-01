@@ -28,13 +28,16 @@ export const formatCaution = async (params) => {
         padding: 0;
     }
     .container {
-        max-width: 600px;
+        max-width: 50%;
         margin: 100px auto;
         background-color: #fff;
         padding: 30px;
         border-radius: 8px;
-        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        box-shadow: 0px 0px 5px #908f91;
         text-align: center;
+        border-style: solid;
+        border-color: #ff0000;
+        border-width: 2px;
     }
     h1 {
         color: #ff0000;
