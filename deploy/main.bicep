@@ -28,13 +28,16 @@ resource hostingPlan 'Microsoft.Web/serverfarms@2021-03-01' = {
     name: 'Y1'
     tier: 'Dynamic'
   }
-  properties: {}
+  kind: 'linux'
+  properties: {
+    reserved: true
+  }
 }
 
 resource functionApp 'Microsoft.Web/sites@2021-03-01' = {
   name: functionAppName
   location: location
-  kind: 'functionapp'
+  kind: 'functionapp,linux'
   identity: {
     type: 'SystemAssigned'
   }
@@ -72,11 +75,12 @@ resource functionApp 'Microsoft.Web/sites@2021-03-01' = {
         }
         {
           name: 'WEBSITE_RUN_FROM_PACKAGE'
-          value: 'true'
+          value: '1'
         }
       ]
       ftpsState: 'FtpsOnly'
       minTlsVersion: '1.2'
+      linuxFxVersion: 'NODE|20'
     }
     httpsOnly: true
   }
